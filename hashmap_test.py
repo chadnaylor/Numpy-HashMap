@@ -1,7 +1,11 @@
 from hashmap import HashMap
 import pytest
-from hypothesis import given, strategies as st
+from hypothesis import given, find, settings, Verbosity, strategies as st
 import test_helpers
+
+### Uncomment this line to show all test inputs
+### Use this line as a decorator to see inputs for a given test
+# settings(verbosity=Verbosity.verbose)
 
 @given(test_helpers.RANDOM_DICTS)
 def test_init_from_dict(d):
@@ -25,6 +29,7 @@ def test_getitem(init):
     assert hashmap[item] == init[item]
 
 @given(init=test_helpers.RANDOM_DICTS)
+# @settings(verbosity=Verbosity.verbose)
 def test_contains(init):
   hashmap = HashMap(init)
   for item in init:

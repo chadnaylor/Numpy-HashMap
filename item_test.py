@@ -1,7 +1,10 @@
 from item import Item
 import pytest
-from hypothesis import given, strategies as st
+from hypothesis import given, find, settings, Verbosity, strategies as st
 import test_helpers
+
+### Uncomment this line to show test inputs
+# settings(verbosity=Verbosity.verbose)
 
 @given(key=test_helpers.RANDOM_KEYS, value=test_helpers.RANDOM_VALUES)
 def test_immutable_key(key, value):

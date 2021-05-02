@@ -21,7 +21,7 @@ class HashMap(MutableMapping):
     return self.__len
 
   def __resize(self):
-    old_items = self.items()
+    old_items = self.__items()
     self.__size = 2 * self.__size
     self.__len = 0
     self.__array = np.zeros(self.__size, dtype=object)
@@ -106,7 +106,7 @@ class HashMap(MutableMapping):
   def __iter__(self):
     return HashMapIterator(self.__array)
 
-  def items(self):
+  def __items(self):
     items = []
     for item in HashMapIterator(self.__array):
       items.append((item, self.__getitem__(item)))

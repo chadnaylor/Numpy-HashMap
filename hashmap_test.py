@@ -1,18 +1,14 @@
 from hashmap import HashMap
 import pytest
 from hypothesis import given, strategies as st
+import test_helpers
 
-random_dict = st.dictionaries(
-  st.one_of(st.integers(), st.text()), 
-  st.one_of(st.integers(), st.text(), st.lists(st.integers()))
-)
-
-@given(random_dict)
+@given(test_helpers.RANDOM_DICTS)
 def test_fuzz_HashMap(d):
   HashMap(*d)
   HashMap(d)
 
-@given(st.one_of(st.integers(), st.text()))
+@given(test_helpers.RANDOM_KEYS)
 def test_getitem(i):
   hashmap = HashMap()
 

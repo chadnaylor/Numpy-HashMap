@@ -5,9 +5,10 @@ from item import Item
 
 class HashMap(MutableMapping):
   def __init__(self, *args):
-    self.__size = 2**8 #initialize array length
+    self.__size = 2**4 #initialize array length
     self.__array = np.zeros(self.__size, dtype=object) #create empty array
     self.__len = 0
+    self.__max_load = 0.2
 
     for arg in args:
       if type(arg) is not dict:
@@ -16,11 +17,18 @@ class HashMap(MutableMapping):
       for key, value in arg.items():
         self.__setitem__(key, value)
 
-  def __del__(self):
-    pass
-
   def __len__(self):
     return self.__len
+
+  def __resize(self):
+    old_items = self.items()
+    self.__size = 2 * self.__size
+    self.__len = 0
+    self.__array = np.zeros(self.__size, dtype=object)
+
+    for item, value in old_items:
+      self.__setitem__(item, value)  
+      assert self.__contains__(item)  
 
   def __setitem__(self, key, value):
     h = get_hash(self.__size, key)
@@ -38,6 +46,9 @@ class HashMap(MutableMapping):
       else:
         curr_item.chain = Item(key, value)    
         self.__len += 1 
+
+      if self.__len / self.__size > self.__max_load:
+        self.__resize()
 
   def __getitem__(self, key):
     h = get_hash(self.__size, key)
@@ -95,6 +106,12 @@ class HashMap(MutableMapping):
   def __iter__(self):
     return HashMapIterator(self.__array)
 
+  def items(self):
+    items = []
+    for item in HashMapIterator(self.__array):
+      items.append((item, self.__getitem__(item)))
+    return items
+
 class HashMapIterator(Iterator):
   def __init__(self, array):
     self.__values = array[np.nonzero(array)]
@@ -104,9 +121,10 @@ class HashMapIterator(Iterator):
   def __next__(self):
     if self.__curr is not None and self.__curr.chain is not None:
       self.__curr = self.__curr.chain  
-    elif self.__index < len(self.__values) - 1:
-      self.__index += 1
+    elif self.__index < len(self.__values):
+      
       self.__curr = self.__values[self.__index]
+      self.__index += 1
     else:
       raise StopIteration
 

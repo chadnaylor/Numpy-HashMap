@@ -31,8 +31,13 @@ def test_getitem(init):
 @given(init=test_helpers.RANDOM_DICTS)
 def test_iter(init):
   hashmap = HashMap(init)
+
+  i = 0
   for item in hashmap:
     assert hashmap[item] == init[item]
+    i +=1
+
+  assert len(init) == i
 
 @given(init=test_helpers.RANDOM_DICTS)
 def test_contains(init):
@@ -83,3 +88,11 @@ def test_setitem_existing(init, newvalue):
     assert hashmap[item] == newvalue
     assert len(hashmap) == curr_len
 
+@given(st.dictionaries(st.integers(), st.integers(), min_size=2**6, max_size=2**9))
+def test_grow_array(init):
+  hashmap = HashMap(init)
+  for item in init:
+    assert item in hashmap
+    assert hashmap[item] == init[item]
+
+  

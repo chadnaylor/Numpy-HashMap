@@ -29,6 +29,12 @@ def test_getitem(init):
     assert hashmap[item] == init[item]
 
 @given(init=test_helpers.RANDOM_DICTS)
+def test_iter(init):
+  hashmap = HashMap(init)
+  for item in hashmap:
+    assert hashmap[item] == init[item]
+
+@given(init=test_helpers.RANDOM_DICTS)
 def test_contains(init):
   hashmap = HashMap(init)
   for item in init:
@@ -76,3 +82,4 @@ def test_setitem_existing(init, newvalue):
     hashmap[item] = newvalue
     assert hashmap[item] == newvalue
     assert len(hashmap) == curr_len
+

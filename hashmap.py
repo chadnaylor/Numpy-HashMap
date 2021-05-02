@@ -1,4 +1,4 @@
-from collections.abc import MutableMapping
+from collections.abc import MutableMapping, Iterator
 import numpy as np
 from get_hash import get_hash
 from item import Item
@@ -78,7 +78,6 @@ class HashMap(MutableMapping):
 
       raise NameError(f"{key} does not exist!")
 
-
   def __contains__(self, key):
     h = get_hash(self.__size, key)
     if self.__array[h] == 0:
@@ -94,7 +93,21 @@ class HashMap(MutableMapping):
         return True
 
   def __iter__(self):
-    pass
+    return HashMapIterator(self.__array)
 
+class HashMapIterator(Iterator):
+  def __init__(self, array):
+    self.__values = array[np.nonzero(array)]
+    self.__curr = None
+    self.__index = 0
 
+  def __next__(self):
+    if self.__curr is not None and self.__curr.chain is not None:
+      self.__curr = self.__curr.chain  
+    elif self.__index < len(self.__values) - 1:
+      self.__index += 1
+      self.__curr = self.__values[self.__index]
+    else:
+      raise StopIteration
 
+    return self.__curr.key

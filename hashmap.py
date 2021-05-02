@@ -5,37 +5,37 @@ from item import Item
 
 class HashMap(MutableMapping):
   def __init__(self, *args):
-    self.__size = 2**4 #initialize array length
-    self.__array = np.zeros(self.__size, dtype=object) #create empty array
-    self.__len = 0
-    self.__max_load = 0.2
+    self._size = 2**4 #initialize array length
+    self.__array = np.zeros(self._size, dtype=object) #create empty array
+    self._len = 0
+    self._max_load = 0.2
 
     for arg in args:
       if type(arg) is not dict:
-        raise TypeError("HashMap must be initialized empty or with a dict")
+        raise TypeError(f"HashMap must be initialized empty or with a dict, got {arg} of type {type(arg)}")
 
       for key, value in arg.items():
         self.__setitem__(key, value)
 
   def __len__(self):
-    return self.__len
+    return self._len
 
   def __resize(self):
     old_items = self.__items()
-    self.__size = 2 * self.__size
-    self.__len = 0
-    self.__array = np.zeros(self.__size, dtype=object)
+    self._size = 2 * self._size
+    self._len = 0
+    self.__array = np.zeros(self._size, dtype=object)
 
     for item, value in old_items:
       self.__setitem__(item, value)  
       assert self.__contains__(item)  
 
   def __setitem__(self, key, value):
-    h = get_hash(self.__size, key)
+    h = get_hash(self._size, key)
 
     if self.__array[h] == 0:
       self.__array[h] = Item(key, value)
-      self.__len += 1
+      self._len += 1
     else:
       curr_item = self.__array[h]
       while curr_item.key != key and curr_item.chain is not None:
@@ -45,13 +45,13 @@ class HashMap(MutableMapping):
         curr_item.value = value
       else:
         curr_item.chain = Item(key, value)    
-        self.__len += 1 
+        self._len += 1 
 
-      if self.__len / self.__size > self.__max_load:
+      if self._len / self._size > self._max_load:
         self.__resize()
 
   def __getitem__(self, key):
-    h = get_hash(self.__size, key)
+    h = get_hash(self._size, key)
     if self.__array[h] == 0:
       raise NameError(f"{key} does not exist!")
     else:
@@ -65,7 +65,7 @@ class HashMap(MutableMapping):
         return curr_item.value
 
   def __delitem__(self, key):
-    h = get_hash(self.__size, key)
+    h = get_hash(self._size, key)
     if self.__array[h] == 0:
       raise NameError(f"{key} does not exist!")
     elif self.__array[h].key == key:
@@ -73,7 +73,7 @@ class HashMap(MutableMapping):
         self.__array[h] = self.__array[h].chain
       else: 
         self.__array[h] = 0
-      self.__len -= 1
+      self._len -= 1
       return
     else:
       curr_item = self.__array[h]
@@ -83,14 +83,14 @@ class HashMap(MutableMapping):
             curr_item.chain = curr_item.chain.chain
           else:
             curr_item.chain = None
-          self.__len -= 1
+          self._len -= 1
           return
         curr_item = curr_item.chain
 
       raise NameError(f"{key} does not exist!")
 
   def __contains__(self, key):
-    h = get_hash(self.__size, key)
+    h = get_hash(self._size, key)
     if self.__array[h] == 0:
       return False
     else:

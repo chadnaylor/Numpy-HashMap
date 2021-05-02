@@ -1,1 +1,4 @@
-venv/
+.hypothesis
+.pytest_cache
+.vscode
+__pycache__

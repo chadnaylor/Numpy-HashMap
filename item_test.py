@@ -12,11 +12,11 @@ def test_immutable_key(key, value):
     with pytest.raises(AttributeError):
       i.key = "Some key"
 
-@given(key=test_helpers.RANDOM_KEYS, value=test_helpers.RANDOM_VALUES)
-def test_immutable_value(key, value):
+@given(key=test_helpers.RANDOM_KEYS, value=test_helpers.RANDOM_VALUES, newvalue = test_helpers.RANDOM_VALUES)
+def test_set_value(key, value, newvalue):
     i = Item(key=key, value=value)
-    with pytest.raises(AttributeError):
-      i.value = "Some value"
+    i.value = newvalue
+    assert i.value == newvalue
 
 @given(key=test_helpers.RANDOM_KEYS, value=test_helpers.RANDOM_VALUES)
 def test_get_key(key, value):

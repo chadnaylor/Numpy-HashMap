@@ -28,7 +28,6 @@ class HashMap(MutableMapping):
 
     for item, value in old_items:
       self.__setitem__(item, value)  
-      assert self.__contains__(item)  
 
   def __setitem__(self, key, value):
     h = get_hash(self._size, key)

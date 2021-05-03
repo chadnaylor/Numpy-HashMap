@@ -3,6 +3,7 @@ from get_hash import get_hash
 from item import Item
 from hashmap import HashMap, HashMapIterator
 
+### HashMap implemented with standard python list instead of Numpy array
 class HashMapList(HashMap):
   def __init__(self, *args):
     super().__init__()
@@ -23,7 +24,6 @@ class HashMapList(HashMap):
 
     for item, value in old_items:
       self.__setitem__(item, value)  
-      assert self.__contains__(item)  
 
 class HashMapListIterator(HashMapIterator):
   def __init__(self, array):

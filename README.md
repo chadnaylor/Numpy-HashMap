@@ -4,8 +4,8 @@ Numpy Hashmap explores several approaches for performant Hash Table behavior, wi
 
 Structures:
 
-HashMap class in hashmap.py uses a 1-D numpy array for storing key-value pairs, and resolves collisions by chaining
-HashMapList class in hashmap_list.py is identical to hashmap.py, but uses python's list primitive 
+**HashMap** class in hashmap.py uses a 1-D numpy array for storing key-value pairs, and resolves collisions by chaining
+**HashMapList** class in hashmap_list.py is identical to hashmap.py, but uses python's list primitive 
 
 ## Installation
 
@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-HashMap implements the MutableMapping abstract base class, and behaves accordingly.
+HashMap implements the **MutableMapping** abstract base class, and behaves accordingly.
 
 ```python
 from hashmap import HashMap
@@ -64,7 +64,7 @@ To see all inputs for a specific test, add this decorator:
 
 ## Benchmarks
 
-Benchmarks.ipynb contains plots of the relative performance of these implementations against python's dict.  Both implementations are about 6x slower than dict, but run in constant time.  The difference seems to be due to the extra calls needed to set up the chained objects. 
+**Benchmarks.ipynb** contains plots of the relative performance of these implementations against python's dict.  Both implementations are about 6x slower than dict, but run in **constant time**.  The difference seems to be due to the extra calls needed to set up the chained objects. 
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

@@ -67,5 +67,10 @@ To see all inputs for a specific test, add this decorator:
 
 **Benchmarks.ipynb** contains plots of the relative performance of these implementations against python's dict.  Both implementations are about 6x slower than dict, but run in **constant time**.  The difference seems to be due to the extra calls needed to set up the chained objects. 
 
+![image](https://user-images.githubusercontent.com/5565839/116873397-3cbbe100-abdd-11eb-984b-8691d1116128.png)
+
+![image](https://user-images.githubusercontent.com/5565839/116873353-2746b700-abdd-11eb-87fa-92321e5a0113.png)
+
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

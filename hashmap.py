@@ -32,22 +32,21 @@ class HashMap(MutableMapping):
   def __setitem__(self, key, value):
     h = get_hash(self._size, key)
 
+    curr_item = self.__array[h]
+    while curr_item != 0 and curr_item.key != key and curr_item.chain is not None:
+      curr_item = curr_item.chain
+
     if self.__array[h] == 0:
       self.__array[h] = Item(key, value)
       self._len += 1
+    elif curr_item.key == key:
+      curr_item.value = value
     else:
-      curr_item = self.__array[h]
-      while curr_item.key != key and curr_item.chain is not None:
-        curr_item = curr_item.chain
+      curr_item.chain = Item(key, value)    
+      self._len += 1 
 
-      if curr_item.key == key:
-        curr_item.value = value
-      else:
-        curr_item.chain = Item(key, value)    
-        self._len += 1 
-
-      if self._len / self._size > self._max_load:
-        self.__resize()
+    if self._len / self._size > self._max_load:
+      self.__resize()
 
   def __getitem__(self, key):
     h = get_hash(self._size, key)

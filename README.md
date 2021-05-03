@@ -5,6 +5,7 @@ Numpy Hashmap explores several approaches for performant Hash Table behavior, wi
 Structures:
 
 **HashMap** class in hashmap.py uses a 1-D numpy array for storing key-value pairs, and resolves collisions by chaining
+
 **HashMapList** class in hashmap_list.py is identical to hashmap.py, but uses python's list primitive 
 
 ## Installation

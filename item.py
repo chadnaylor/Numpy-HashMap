@@ -14,6 +14,6 @@ class Item:
 
   @chain.setter
   def chain(self, chain):
-    if type(chain) is not Item:
-      raise TypeError("Chained value must be an Item")
+    if type(chain) is not Item and chain is not None:
+      raise TypeError("Chained value must be an Item, got ", chain)
     self.__chain = chain

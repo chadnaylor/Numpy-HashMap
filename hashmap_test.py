@@ -61,6 +61,20 @@ def test_delitem(init):
     assert item not in hashmap
     assert len(hashmap) == curr_len - 1
 
+  
+def test_delitem_2():
+  init = {0:1, '': 2, None: 2}
+  hashmap = HashMap(init)
+
+  for item in {'': 2, 0:1,  None: 2}:
+    curr_len = len(hashmap)
+    del hashmap[item]
+
+    assert item not in hashmap
+    assert len(hashmap) == curr_len - 1
+
+  
+
 @given(
   init=test_helpers.RANDOM_DICTS, 
   key = test_helpers.RANDOM_KEYS, 

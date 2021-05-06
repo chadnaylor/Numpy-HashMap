@@ -17,6 +17,7 @@ class HashMap(MutableMapping):
       for key, value in arg.items():
         self.__setitem__(key, value)
 
+
   def __len__(self):
     return self._len
 
@@ -44,7 +45,7 @@ class HashMap(MutableMapping):
         elif curr_item.chain is None:
           curr_item.chain = Item(key, value)    
           self._len += 1 
-        curr_item = curr_item.chain     
+        curr_item = curr_item.chain    
 
       if self._len / self._size > self._max_load:
         self.__resize()
@@ -78,11 +79,9 @@ class HashMap(MutableMapping):
       prev_item = None
       while curr_item is not None:
         if curr_item.key == key:
-          if prev_item is None:
-            self.__array[h] = curr_item.chain
-          else:
-            prev_item.chain = curr_item.chain
+          prev_item.chain = curr_item.chain
           self._len -= 1
+          return
 
         prev_item = curr_item
         curr_item = curr_item.chain
